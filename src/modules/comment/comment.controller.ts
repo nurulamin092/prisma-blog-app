@@ -25,7 +25,21 @@ const getCommentById = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(400).json({
       success: false,
+      message: "Comment fetched failed",
+      details: err,
+    });
+  }
+};
 
+const getCommentByAuthor = async (req: Request, res: Response) => {
+  const { authorId } = req.params;
+  try {
+    const result = await commentService.getCommentByAuthor(authorId as string);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: "Author fetched failed",
       details: err,
     });
   }
@@ -34,4 +48,5 @@ const getCommentById = async (req: Request, res: Response) => {
 export const commentController = {
   createComment,
   getCommentById,
+  getCommentByAuthor,
 };
