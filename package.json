@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev1": "npx tsx watch src/server.ts",
     "dev": "nodemon --watch src --ext ts --exec tsx src/server.ts",
-    "seed:admin": "nodemon --watch src --ext ts --exec tsx src/scripts/seedAdmin.ts"
+    "seed:admin": "nodemon --watch src --ext ts --exec tsx src/scripts/seedAdmin.ts",
+    "std":"npx prisma studio"
 
   },
   "keywords": [],
