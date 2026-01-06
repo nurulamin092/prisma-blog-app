@@ -11,7 +11,11 @@ router.post(
 
 router.get("/author/:authorId", commentController.getCommentByAuthor);
 router.get("/:commentId", commentController.getCommentById);
-
+router.patch(
+  "/:commentId",
+  auth(UserRole.USER, UserRole.ADMIN),
+  commentController.updateComment
+);
 router.delete(
   "/:commentId",
   auth(UserRole.USER, UserRole.ADMIN),

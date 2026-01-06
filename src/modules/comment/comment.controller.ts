@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { commentService } from "./comment.service";
+import { date } from "better-auth/*";
 
 const createComment = async (req: Request, res: Response) => {
   try {
@@ -63,9 +64,30 @@ const deleteComments = async (req: Request, res: Response) => {
   }
 };
 
+const updateComment = async (req: Request, res: Response) => {
+  try {
+    const user = req.user;
+    const { commentId } = req.params;
+
+    const result = await commentService.updateComment(
+      commentId as string,
+      req.body,
+      user?.id as string
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: "updated comment failed",
+      details: err,
+    });
+  }
+};
+
 export const commentController = {
   createComment,
   getCommentById,
   getCommentByAuthor,
   deleteComments,
+  updateComment,
 };
