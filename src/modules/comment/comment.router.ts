@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { commentController } from "./comment.controller";
 import auth, { UserRole } from "../../middleware/auth";
+import { commentService } from "./comment.service";
 
 const router = Router();
 router.post(
@@ -15,6 +16,12 @@ router.patch(
   "/:commentId",
   auth(UserRole.USER, UserRole.ADMIN),
   commentController.updateComment
+);
+
+router.patch(
+  "/:commentId/moderate",
+  auth(UserRole.ADMIN),
+  commentController.moderateComment
 );
 router.delete(
   "/:commentId",
