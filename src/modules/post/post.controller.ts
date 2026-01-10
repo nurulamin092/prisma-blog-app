@@ -126,10 +126,30 @@ const updatePost = async (req: Request, res: Response) => {
     });
   }
 };
+
+const deletePost = async (req: Request, res: Response) => {
+  try {
+    const user = req.user;
+    const { postId } = req.params;
+    const isAdmin = user?.role === UserRole.ADMIN;
+    const result = await postService.deletePost(
+      postId as string,
+      user?.id as string,
+      isAdmin
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({
+      error: "Post fetched failed...",
+      details: err,
+    });
+  }
+};
 export const postController = {
   createPost,
   getAllPost,
   getPostById,
   getMyPost,
   updatePost,
+  deletePost,
 };
