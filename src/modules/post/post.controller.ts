@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { postService } from "./post.service";
 import { PostStatus } from "../../../generated/prisma/enums";
 import paginationSortingHelper from "../../helpers/pagination-sorting-helpers";
 import { UserRole } from "../../middleware/auth";
 
-const createPost = async (req: Request, res: Response) => {
+const createPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log(req.user);
     const user = req.user;
@@ -19,11 +19,8 @@ const createPost = async (req: Request, res: Response) => {
       message: "Post create successfully",
       data: result,
     });
-  } catch (err: any) {
-    res.status(400).json({
-      success: false,
-      message: err.message,
-    });
+  } catch (e) {
+    next(e);
   }
 };
 
